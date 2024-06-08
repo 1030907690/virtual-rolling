@@ -1,12 +1,15 @@
 <template>
 
   <div class="view-port" ref="viewPort" :style="{ '--rowHeight': rowHeight + 'px' }" @scroll="onScroll">
+      <!-- 占位 -->
     <div class="scroll-bar" ref="scrollBar"> </div>
+
     <div class="list" ref="listRef">
       <div class="row" v-for="(item, index) in showList">
         {{ item.n }}
       </div>
     </div>
+
   </div>
 </template>
 
@@ -15,7 +18,7 @@ import { ref, onMounted, computed } from "vue"
 
 const bigList = new Array(200000).fill(null).map((ele, i) => ({ n: i + 1 }))
 
-
+//  冻结对象，Object.freeze vue监听它的改变
 let list = ref(Object.freeze(bigList))
 let start = ref(0)
 let end = ref(20)
@@ -28,7 +31,9 @@ let listRef = ref()
 
 onMounted(() => {
   console.log("挂载完成")
+  //   滚动区域的高
   viewPort.value.style.height = (rowHeight.value * viewCount.value) + 'px'
+  //  占位的高
   scrollBar.value.style.height = (rowHeight.value * list.value.length) + 'px'
 
 })
@@ -46,6 +51,8 @@ const onScroll = () => {
   console.log("offsetTop " , offsetTop)
   start.value = Math.round(offsetTop / rowHeight.value)
   end.value = start.value + viewCount.value
+  console.log(" start.value ",start.value ," end.value ",end.value )
+  // list 要下移的位置
   listRef.value.style.transform = `translateY(${offsetTop}px)`
  
 }
