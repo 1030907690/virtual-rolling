@@ -96,7 +96,7 @@ const onScroll = () => {
   start.value = Math.round(offsetTop / rowHeight.value)
   end.value = start.value + viewCount.value
   console.log(" start.value ",start.value ," end.value ",end.value )
-  // list 要下移的位置 transform  与 paddingTop 都能实现效果
+  // list 要下移的位置 transform  或 paddingTop 都能实现效果
   // listRef.value.style.transform = `translateY(${offsetTop}px)`
     listRef.value.style.paddingTop = `${offsetTop}px`
 }
